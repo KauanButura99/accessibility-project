@@ -36,8 +36,11 @@
     "prettier/prettier": [
       "warn",
       {
-        "endOfLine": "auto",
-        "singleQuote": true
+        "endOfLine": "lf",
+        "singleQuote": true,
+        "semi": false,
+        "trailingComma": "none",
+        "jsxSingleQuote": false
       }
     ]
   }

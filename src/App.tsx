@@ -1,7 +1,13 @@
-import Hello from '~/components/Hello';
+import AppPage from './components/AppPage'
+import { GlobalStyle } from './styles'
 
-function App() {
-  return <Hello />;
+const App = () => {
+  return (
+    <>
+      <GlobalStyle />
+      <AppPage />
+    </>
+  )
 }
 
-export default App;
+export default App
