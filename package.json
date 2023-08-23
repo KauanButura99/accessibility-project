@@ -14,9 +14,11 @@
   },
   "dependencies": {
     "@djpfs/react-vlibras": "^2.0.2",
+    "@reduxjs/toolkit": "^1.9.5",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
-    "react-icons": "^4.10.1"
+    "react-icons": "^4.10.1",
+    "react-redux": "^8.1.2"
   },
   "devDependencies": {
     "@types/react": "^18.0.9",

@@ -19,6 +19,12 @@ type PageProps = {
   }>
 }
 
+type ItensProps = {
+  id: string
+  title: string
+  description: string
+}
+
 const pages: PageProps[] = [
   {
     id: '1',
@@ -61,9 +67,49 @@ const pages: PageProps[] = [
   }
 ]
 
+const itens: ItensProps[] = [
+  {
+    id: '01',
+    title: 'Item 01',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod possimus unde tempore, tenetur odit aperiam molestiae veniam qui reprehenderit, iste officiis corporis adipisci ut, praesentium ex animi laudantium natus ipsa?'
+  },
+  {
+    id: '02',
+    title: 'Item 02',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod possimus unde tempore, tenetur odit aperiam molestiae veniam qui reprehenderit, iste officiis corporis adipisci ut, praesentium ex animi laudantium natus ipsa?'
+  },
+  {
+    id: '03',
+    title: 'Item 03',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod possimus unde tempore, tenetur odit aperiam molestiae veniam qui reprehenderit, iste officiis corporis adipisci ut, praesentium ex animi laudantium natus ipsa?'
+  },
+  {
+    id: '04',
+    title: 'Exemple 01',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod possimus unde tempore, tenetur odit aperiam molestiae veniam qui reprehenderit, iste officiis corporis adipisci ut, praesentium ex animi laudantium natus ipsa?'
+  },
+  {
+    id: '05',
+    title: 'Exemple 02',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod possimus unde tempore, tenetur odit aperiam molestiae veniam qui reprehenderit, iste officiis corporis adipisci ut, praesentium ex animi laudantium natus ipsa?'
+  }
+]
+
 const AppPage = () => {
   const [pageId, setPageId] = useState('1')
+  const [itemId, setItemId] = useState('')
   const [resourceApp, setResourceApp] = useState<ResourceProps>('none')
+  const [searchText, setSearchText] = useState('')
+  const [startIndex, setStartIndex] = useState(0)
+
+  const selectedItem = (idItem: string) => {
+    setItemId(idItem)
+  }
 
   const selectedPage = (idPage: string, resourcePage?: ResourceProps) => {
     setPageId(idPage)
@@ -71,9 +117,139 @@ const AppPage = () => {
     if (resourcePage) {
       setResourceApp(resourcePage)
     }
+
+    if (idPage === 'search') {
+      setSearchText('')
+    }
+  }
+
+  const searchItem = (textItem: string) => {
+    setSearchText(textItem)
+    setPageId('searchResults')
+  }
+
+  const itensFilter = () => {
+    let filteredItens = itens
+    if (searchText !== undefined || '') {
+      filteredItens = filteredItens.filter((item) => item.title.toLowerCase().search(searchText.toLowerCase()) >= 0)
+      return filteredItens
+    }
+
+    return itens
+  }
+
+  const itemFilter = () => {
+    let filteredItem = itens
+    if (itemId !== undefined || '') {
+      filteredItem = filteredItem.filter((item) => item.id.toLowerCase().search(itemId.toLowerCase()) >= 0)
+      return filteredItem
+    }
+  }
+
+  const itemToRender = itemFilter()
+  const showItens = itensFilter()
+  const itensToRender = showItens.slice(startIndex, startIndex + 3)
+
+  const handleNext = () => {
+    setStartIndex(startIndex + 3)
+  }
+
+  const handlePrev = () => {
+    setStartIndex(Math.max(0, startIndex - 3))
   }
 
   if (pages) {
+    if (itemId !== '') {
+      return (
+        <S.Container>
+          <div className="container">
+            {itemToRender?.map((item) => (
+              <div key={item.id}>
+                <S.Title>{item.title}</S.Title>
+                <p>{item.description}</p>
+              </div>
+            ))}
+          </div>
+        </S.Container>
+      )
+    }
+
+    if (pageId === 'searchResults') {
+      if (resourceApp === 'deaf') {
+        return (
+          <S.Container>
+            <div className="container">
+              <div className="App">
+                <VLibras forceOnload={true} />
+                <header className="App-header">
+                  <S.Title>Resultado(s) da pesquisa</S.Title>
+                  <S.Buttons>
+                    <S.DeafContainer className="display-items">
+                      {itensToRender.map((item) => (
+                        <div key={item.id} className="display-flex">
+                          <Button title={item.title} className="deaf-button" />
+                          <Button className="check" onClick={() => selectedItem(item.id)}>
+                            <>
+                              <AiOutlineCheck />{' '}
+                            </>
+                          </Button>
+                        </div>
+                      ))}
+                      <div className={startIndex === 0 ? 'is-hidden' : 'display-flex'}>
+                        <Button title="Itens Anteriores" className="deaf-button" />
+                        <Button onClick={handlePrev} className="check">
+                          <>
+                            <AiOutlineCheck />{' '}
+                          </>
+                        </Button>
+                      </div>
+                      <div className={startIndex + 3 >= showItens.length ? 'is-hidden' : 'display-flex'}>
+                        <Button title="Próximos Itens" className="deaf-button" />
+                        <Button onClick={handleNext} className="check">
+                          <>
+                            <AiOutlineCheck />{' '}
+                          </>
+                        </Button>
+                      </div>
+                      <div className="display-flex">
+                        <Button title="Pesquisar novamente" className="deaf-button" />
+                        <Button onClick={() => selectedPage('search')} className="check">
+                          <>
+                            <AiOutlineCheck />{' '}
+                          </>
+                        </Button>
+                      </div>
+                    </S.DeafContainer>
+                  </S.Buttons>
+                </header>
+              </div>
+            </div>
+          </S.Container>
+        )
+      }
+      return (
+        <S.Container>
+          <div className="container">
+            <S.Title>Resultado(s) da pesquisa</S.Title>
+            <S.Buttons>
+              {itensToRender.map((item) => (
+                <div key={item.id}>
+                  <Button title={item.title} onClick={() => selectedItem(item.id)} />
+                </div>
+              ))}
+              <Button title="Itens Anteriores" onClick={handlePrev} className={startIndex === 0 ? 'is-hidden' : ''} />
+              <Button
+                title="Próximos Itens"
+                onClick={handleNext}
+                className={startIndex + 3 >= showItens.length ? 'is-hidden' : ''}
+              />
+              <Button title="Pesquisar novamente" onClick={() => selectedPage('search')} />
+            </S.Buttons>
+          </div>
+        </S.Container>
+      )
+    }
+
     if (pageId === 'search') {
       if (resourceApp === 'deaf') {
         return (
@@ -84,14 +260,14 @@ const AppPage = () => {
                 <header className="App-header">
                   <S.Title>O que deseja procurar?</S.Title>
                   <S.Buttons>
-                    <S.InputSearch />
+                    <S.InputSearch onChange={(e) => setSearchText(e.target.value)} />
                     <S.DeafContainer>
-                      <Button title="Pesquisar" onClick={() => selectedPage} />
-                      <S.DeafButton className="check" onClick={() => selectedPage}>
+                      <Button title="Pesquisar" />
+                      <Button className="check" onClick={() => searchItem(searchText)}>
                         <>
                           <AiOutlineCheck />{' '}
                         </>
-                      </S.DeafButton>
+                      </Button>
                     </S.DeafContainer>
                   </S.Buttons>
                 </header>
@@ -106,8 +282,8 @@ const AppPage = () => {
           <div className="container">
             <S.Title>O que deseja procurar?</S.Title>
             <S.Buttons>
-              <S.InputSearch />
-              <Button title="Pesquisar" onClick={() => selectedPage} />
+              <S.InputSearch onChange={(e) => setSearchText(e.target.value)} />
+              <Button title="Pesquisar" onClick={() => searchItem(searchText)} />
             </S.Buttons>
           </div>
         </S.Container>
@@ -129,11 +305,11 @@ const AppPage = () => {
                     <div key={button.titleButton}>
                       <S.DeafContainer>
                         <Button title={button.titleButton} />
-                        <S.DeafButton onClick={() => selectedPage(button.goToId, button.resource)} className="check">
+                        <Button onClick={() => selectedPage(button.goToId, button.resource)} className="check">
                           <>
                             <AiOutlineCheck />{' '}
                           </>
-                        </S.DeafButton>
+                        </Button>
                       </S.DeafContainer>
                     </div>
                   ))}
