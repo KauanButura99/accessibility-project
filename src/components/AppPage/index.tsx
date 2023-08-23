@@ -260,7 +260,7 @@ const AppPage = () => {
                 <header className="App-header">
                   <S.Title>O que deseja procurar?</S.Title>
                   <S.Buttons>
-                    <S.InputSearch onChange={(e) => setSearchText(e.target.value)} />
+                    <S.InputSearch onChange={(e) => setSearchText(e?.target.value)} />
                     <S.DeafContainer>
                       <Button title="Pesquisar" />
                       <Button className="check" onClick={() => searchItem(searchText)}>
@@ -282,7 +282,7 @@ const AppPage = () => {
           <div className="container">
             <S.Title>O que deseja procurar?</S.Title>
             <S.Buttons>
-              <S.InputSearch onChange={(e) => setSearchText(e.target.value)} />
+              <S.InputSearch onChange={(e) => setSearchText(e?.target.value)} />
               <Button title="Pesquisar" onClick={() => searchItem(searchText)} />
             </S.Buttons>
           </div>
