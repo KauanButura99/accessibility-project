@@ -9,6 +9,10 @@ export const Container = styled.div`
   padding: 96px 0;
   text-align: center;
 
+  &.title-container {
+    padding: 48px 0;
+  }
+
   .is-hidden {
     display: none;
   }
@@ -67,7 +71,7 @@ export const InputSearch = styled.input`
   width: 100%;
   padding: 24px 16px;
   text-align: center;
-  outline: 5px solid ${colors.lightBlue};
+  outline: 5px solid ${colors.inputBlue};
 
   @media (max-width: ${breakpoints.mobile}) {
     margin-bottom: 10px;

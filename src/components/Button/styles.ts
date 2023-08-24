@@ -26,6 +26,11 @@ export const ButtonContainer = styled.button`
     }
   }
 
+  &.item-buttom {
+    background-color: ${colors.white};
+    border: 5px solid ${colors.inputBlue};
+  }
+
   &.check {
     width: 100%;
     max-width: 120px;

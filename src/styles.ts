@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components'
 export const colors = {
   darkBlue: '#222340',
   lightBlue: '#08CBF5',
+  inputBlue: '#0da0bf',
   gray: '#D2D0D0',
   black: '#000',
   white: '#fff'

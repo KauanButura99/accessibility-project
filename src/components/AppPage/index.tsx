@@ -177,7 +177,7 @@ const AppPage = () => {
     if (itemId !== '') {
       if (resourceApp === 'deaf') {
         return (
-          <S.Container>
+          <S.Container className="title-container">
             <div className="container">
               <div className="App">
                 <VLibras forceOnload={true} />
@@ -211,7 +211,7 @@ const AppPage = () => {
         )
       }
       return (
-        <S.Container>
+        <S.Container className="title-container">
           <div className="container">
             {itemToRender &&
               itemToRender.map((item) => (
@@ -246,8 +246,8 @@ const AppPage = () => {
                     <S.DeafContainer className="display-items">
                       {itensToRender.map((item) => (
                         <div key={item.id} className="display-flex">
-                          <Button title={item.title} className="deaf-button" />
-                          <Button className="check" onClick={() => selectedItem(item.id)}>
+                          <Button title={item.title} className="deaf-button item-buttom" />
+                          <Button className="check item-buttom" onClick={() => selectedItem(item.id)}>
                             <>
                               <AiOutlineCheck />{' '}
                             </>
@@ -293,7 +293,7 @@ const AppPage = () => {
             <S.Buttons>
               {itensToRender.map((item) => (
                 <div key={item.id}>
-                  <Button title={item.title} onClick={() => selectedItem(item.id)} />
+                  <Button className="item-buttom" title={item.title} onClick={() => selectedItem(item.id)} />
                 </div>
               ))}
               <Button title="Itens Anteriores" onClick={handlePrev} className={startIndex === 0 ? 'is-hidden' : ''} />
