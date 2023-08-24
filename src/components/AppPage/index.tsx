@@ -23,6 +23,8 @@ type ItensProps = {
   id: string
   title: string
   description: string
+  urlImage: string
+  descriptionImage: string
 }
 
 const pages: PageProps[] = [
@@ -72,31 +74,44 @@ const itens: ItensProps[] = [
     id: '01',
     title: 'Item 01',
     description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod possimus unde tempore, tenetur odit aperiam molestiae veniam qui reprehenderit, iste officiis corporis adipisci ut, praesentium ex animi laudantium natus ipsa?'
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod possimus unde tempore, tenetur odit aperiam molestiae veniam qui reprehenderit, iste officiis corporis adipisci ut, praesentium ex animi laudantium natus ipsa?',
+    urlImage:
+      'https://static.lojanba.com/produtos/tenis-nike-nba-air-jordan-xxxvii-low-masculino/24/JD8-2242-024/JD8-2242-024_zoom1.jpg?ts=1680526681&',
+    descriptionImage: 'Tenis Nike NBA Air Jordan XXXVII Low Masculino - Branco+Vermelho'
   },
   {
     id: '02',
     title: 'Item 02',
     description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod possimus unde tempore, tenetur odit aperiam molestiae veniam qui reprehenderit, iste officiis corporis adipisci ut, praesentium ex animi laudantium natus ipsa?'
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod possimus unde tempore, tenetur odit aperiam molestiae veniam qui reprehenderit, iste officiis corporis adipisci ut, praesentium ex animi laudantium natus ipsa?',
+    urlImage: 'https://cdn.awsli.com.br/2500x2500/1059/1059368/produto/54812969/b602a82574.jpg',
+    descriptionImage: 'Tênis Air Jordan 1 X Royal Toe Preto Azul Unissex'
   },
   {
     id: '03',
     title: 'Item 03',
     description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod possimus unde tempore, tenetur odit aperiam molestiae veniam qui reprehenderit, iste officiis corporis adipisci ut, praesentium ex animi laudantium natus ipsa?'
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod possimus unde tempore, tenetur odit aperiam molestiae veniam qui reprehenderit, iste officiis corporis adipisci ut, praesentium ex animi laudantium natus ipsa?',
+    urlImage:
+      'https://dptafza4tn3d0.cloudfront.net/cache/catalog/CV23131/tenis-nike-air-jordan-1-mid-amarelo-CV23131(7)-750x937.jpg',
+    descriptionImage: 'Tênis Nike Air Jordan 1 Mid Amarelo'
   },
   {
     id: '04',
     title: 'Exemple 01',
     description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod possimus unde tempore, tenetur odit aperiam molestiae veniam qui reprehenderit, iste officiis corporis adipisci ut, praesentium ex animi laudantium natus ipsa?'
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod possimus unde tempore, tenetur odit aperiam molestiae veniam qui reprehenderit, iste officiis corporis adipisci ut, praesentium ex animi laudantium natus ipsa?',
+    urlImage: 'https://imgnike-a.akamaihd.net/1920x1920/016510PA.jpg',
+    descriptionImage: 'Tênis Air Jordan 1 Low Masculino - Foto 1'
   },
   {
     id: '05',
     title: 'Exemple 02',
     description:
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod possimus unde tempore, tenetur odit aperiam molestiae veniam qui reprehenderit, iste officiis corporis adipisci ut, praesentium ex animi laudantium natus ipsa?'
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod possimus unde tempore, tenetur odit aperiam molestiae veniam qui reprehenderit, iste officiis corporis adipisci ut, praesentium ex animi laudantium natus ipsa?',
+    urlImage:
+      'https://img.buzzfeed.com/buzzfeed-static/complex/images/Y19jcm9wLGhfMTA3OSx3XzE5MTgseF80NSx5XzU2OA==/krxirs3henfdrw3tr45d/air-jordan-1-high-true-blue-dz5485-410-pair.jpg?downsize=920:*&output-format=auto&output-quality=auto',
+    descriptionImage: `Air Jordan 1 High 'True Blue' DZ5485 410 Pair`
   }
 ]
 
@@ -160,15 +175,59 @@ const AppPage = () => {
 
   if (pages) {
     if (itemId !== '') {
+      if (resourceApp === 'deaf') {
+        return (
+          <S.Container>
+            <div className="container">
+              <div className="App">
+                <VLibras forceOnload={true} />
+                <header className="App-header">
+                  {itemToRender &&
+                    itemToRender.map((item) => (
+                      <div key={item.id}>
+                        <S.Title className="title-item">{item.title}</S.Title>
+                        <S.ItemImage src={item.urlImage} alt={item.descriptionImage} />
+                        <S.Description>{item.description}</S.Description>
+                        <S.DeafContainer>
+                          <Button title="Voltar para Pesquisa" className="deaf-button" />
+                          <Button
+                            className="check"
+                            onClick={() => {
+                              selectedPage('search')
+                              setItemId('')
+                            }}
+                          >
+                            <>
+                              <AiOutlineCheck />{' '}
+                            </>
+                          </Button>
+                        </S.DeafContainer>
+                      </div>
+                    ))}
+                </header>
+              </div>
+            </div>
+          </S.Container>
+        )
+      }
       return (
         <S.Container>
           <div className="container">
-            {itemToRender?.map((item) => (
-              <div key={item.id}>
-                <S.Title>{item.title}</S.Title>
-                <p>{item.description}</p>
-              </div>
-            ))}
+            {itemToRender &&
+              itemToRender.map((item) => (
+                <div key={item.id}>
+                  <S.Title className="title-item">{item.title}</S.Title>
+                  <S.ItemImage src={item.urlImage} alt={item.descriptionImage} />
+                  <S.Description>{item.description}</S.Description>
+                  <Button
+                    title="Voltar para Pesquisa"
+                    onClick={() => {
+                      selectedPage('search')
+                      setItemId('')
+                    }}
+                  />
+                </div>
+              ))}
           </div>
         </S.Container>
       )
@@ -264,7 +323,7 @@ const AppPage = () => {
                       onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchText(e.target.value)}
                     />
                     <S.DeafContainer>
-                      <Button title="Pesquisar" />
+                      <Button title="Pesquisar" className="deaf-button" />
                       <Button className="check" onClick={() => searchItem(searchText)}>
                         <>
                           <AiOutlineCheck />{' '}
@@ -297,49 +356,53 @@ const AppPage = () => {
     if (resourceApp === 'deaf') {
       return (
         <S.Container>
-          <div className="container">
-            <div className="App">
-              <VLibras forceOnload={true} />
-              <header className="App-header">
-                <S.Title>{page?.title}</S.Title>
-                <S.Buttons>
-                  {page?.buttons.map((button) => (
-                    <div key={button.titleButton}>
-                      <S.DeafContainer>
-                        <Button title={button.titleButton} />
-                        <Button onClick={() => selectedPage(button.goToId, button.resource)} className="check">
-                          <>
-                            <AiOutlineCheck />{' '}
-                          </>
-                        </Button>
-                      </S.DeafContainer>
-                    </div>
-                  ))}
-                </S.Buttons>
-              </header>
+          {page && (
+            <div className="container">
+              <div className="App">
+                <VLibras forceOnload={true} />
+                <header className="App-header">
+                  <S.Title>{page.title}</S.Title>
+                  <S.Buttons>
+                    {page.buttons.map((button) => (
+                      <div key={button.titleButton}>
+                        <S.DeafContainer>
+                          <Button title={button.titleButton} className="deaf-button" />
+                          <Button onClick={() => selectedPage(button.goToId, button.resource)} className="check">
+                            <>
+                              <AiOutlineCheck />{' '}
+                            </>
+                          </Button>
+                        </S.DeafContainer>
+                      </div>
+                    ))}
+                  </S.Buttons>
+                </header>
+              </div>
             </div>
-          </div>
+          )}
         </S.Container>
       )
     }
 
     return (
       <S.Container>
-        <div className="container">
-          <S.Title>{page?.title}</S.Title>
-          <S.Buttons>
-            {page?.buttons.map((button) => (
-              <div key={button.titleButton}>
-                <Button onClick={() => selectedPage(button.goToId, button.resource)} title={button.titleButton} />
-              </div>
-            ))}
-          </S.Buttons>
-        </div>
+        {page && (
+          <div className="container">
+            <S.Title>{page.title}</S.Title>
+            <S.Buttons>
+              {page.buttons.map((button) => (
+                <div key={button.titleButton}>
+                  <Button onClick={() => selectedPage(button.goToId, button.resource)} title={button.titleButton} />
+                </div>
+              ))}
+            </S.Buttons>
+          </div>
+        )}
       </S.Container>
     )
   }
 
-  return <div> TESTE </div>
+  return <div> Loading ... </div>
 }
 
 export default AppPage

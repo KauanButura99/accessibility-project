@@ -24,9 +24,27 @@ export const Title = styled.h2`
   font-weight: 700;
   margin-bottom: 80px;
 
+  &.title-item {
+    margin-bottom: 30px;
+  }
+
   @media (max-width: ${breakpoints.mobile}) {
     font-size: 25px;
     margin-bottom: 30px;
+  }
+`
+
+export const ItemImage = styled.img`
+  width: 100%;
+  height: 100%;
+  max-width: 300px;
+  max-height: 300px;
+  margin-bottom: 20px;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    max-width: 200px;
+    max-height: 200px;
+    margin-bottom: 10px;
   }
 `
 
@@ -52,6 +70,17 @@ export const InputSearch = styled.input`
   outline: 5px solid ${colors.lightBlue};
 
   @media (max-width: ${breakpoints.mobile}) {
+    margin-bottom: 10px;
+  }
+`
+
+export const Description = styled.p`
+  color: ${colors.white};
+  font-size: 25px;
+  margin-bottom: 20px;
+
+  @media (max-width: ${breakpoints.mobile}) {
+    font-size: 18px;
     margin-bottom: 10px;
   }
 `

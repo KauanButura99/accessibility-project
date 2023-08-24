@@ -19,6 +19,7 @@ export const ButtonContainer = styled.button`
 
   &.deaf-button {
     width: 80%;
+    cursor: default;
 
     @media (max-width: ${breakpoints.mobile}) {
       width: 100%;
