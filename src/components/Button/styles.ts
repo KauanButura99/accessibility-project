@@ -5,6 +5,7 @@ export const ButtonContainer = styled.button`
   background-color: ${colors.gray};
   color: ${colors.black};
   font-size: 40px;
+  font-weight: 700;
   border: none;
   border-radius: 30px;
   display: block;
@@ -13,7 +14,7 @@ export const ButtonContainer = styled.button`
   cursor: pointer;
 
   @media (max-width: ${breakpoints.mobile}) {
-    font-size: 25px;
+    font-size: 18px;
     margin-bottom: 10px;
   }
 
