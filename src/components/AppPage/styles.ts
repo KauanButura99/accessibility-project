@@ -3,10 +3,9 @@ import { breakpoints, colors } from '~/styles'
 
 export const Container = styled.div`
   width: 100vw;
-  height: 100%;
-  min-height: 100vh;
+  height: 90vh;
   background-color: ${colors.darkBlue};
-  padding: 96px 0;
+  padding: 40px 0;
   text-align: center;
 
   &.title-container {
@@ -24,9 +23,9 @@ export const Container = styled.div`
 
 export const Title = styled.h2`
   color: ${colors.lightBlue};
-  font-size: 40px;
+  font-size: 30px;
   font-weight: 700;
-  margin-bottom: 80px;
+  margin-bottom: 60px;
 
   &.title-item {
     margin-bottom: 30px;
@@ -41,13 +40,13 @@ export const Title = styled.h2`
 export const ItemImage = styled.img`
   width: 100%;
   height: 100%;
-  max-width: 300px;
-  max-height: 300px;
+  max-width: 200px;
+  max-height: 200px;
   margin-bottom: 20px;
 
   @media (max-width: ${breakpoints.mobile}) {
-    max-width: 200px;
-    max-height: 200px;
+    max-width: 150px;
+    max-height: 150px;
     margin-bottom: 10px;
   }
 `
@@ -55,7 +54,7 @@ export const ItemImage = styled.img`
 export const Buttons = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 30px;
+  gap: 20px;
 
   @media (max-width: ${breakpoints.mobile}) {
     gap: 16px;
@@ -65,11 +64,11 @@ export const Buttons = styled.div`
 export const InputSearch = styled.input`
   background-color: ${colors.white};
   color: ${colors.darkBlue};
-  font-size: 40px;
+  font-size: 32px;
   border: none;
-  border-radius: 10px;
+  border-radius: 2vw;
   width: 100%;
-  padding: 24px 16px;
+  padding: 12px 8px;
   text-align: center;
   outline: 5px solid ${colors.inputBlue};
 

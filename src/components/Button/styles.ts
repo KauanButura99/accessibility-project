@@ -4,13 +4,13 @@ import { breakpoints, colors } from '~/styles'
 export const ButtonContainer = styled.button`
   background-color: ${colors.gray};
   color: ${colors.black};
-  font-size: 40px;
+  font-size: 28px;
   font-weight: 700;
   border: none;
-  border-radius: 30px;
+  border-radius: 2vw;
   display: block;
   width: 100%;
-  padding: 24px 0;
+  padding: 12px 5px;
   cursor: pointer;
 
   @media (max-width: ${breakpoints.mobile}) {

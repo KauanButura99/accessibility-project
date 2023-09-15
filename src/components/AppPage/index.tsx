@@ -6,6 +6,7 @@ import Button from '../Button'
 import { AiOutlineCheck } from 'react-icons/ai'
 
 import * as S from './styles'
+import Menu from '../Menu'
 
 type ResourceProps = 'blind' | 'deaf' | 'none'
 
@@ -126,6 +127,14 @@ const AppPage = () => {
     setItemId(idItem)
   }
 
+  const goToHome = () => {
+    setPageId('1')
+    setItemId('')
+    setResourceApp('none')
+    setStartIndex(0)
+    setSearchText('')
+  }
+
   const selectedPage = (idPage: string, resourcePage?: ResourceProps) => {
     setPageId(idPage)
 
@@ -177,177 +186,195 @@ const AppPage = () => {
     if (itemId !== '') {
       if (resourceApp === 'deaf') {
         return (
-          <S.Container className="title-container">
-            <div className="container">
-              <div className="App">
-                <VLibras forceOnload={true} />
-                <header className="App-header">
-                  {itemToRender &&
-                    itemToRender.map((item) => (
-                      <div key={item.id}>
-                        <S.Title className="title-item">{item.title}</S.Title>
-                        <S.ItemImage src={item.urlImage} alt={item.descriptionImage} />
-                        <S.Description>{item.description}</S.Description>
-                        <S.DeafContainer>
-                          <Button title="Voltar para Pesquisa" className="deaf-button" />
-                          <Button
-                            className="check"
-                            onClick={() => {
-                              selectedPage('search')
-                              setItemId('')
-                            }}
-                          >
-                            <>
-                              <AiOutlineCheck />{' '}
-                            </>
-                          </Button>
-                        </S.DeafContainer>
-                      </div>
-                    ))}
-                </header>
+          <>
+            <S.Container className="title-container">
+              <div className="container">
+                <div className="App">
+                  <VLibras forceOnload={true} />
+                  <header className="App-header">
+                    {itemToRender &&
+                      itemToRender.map((item) => (
+                        <div key={item.id}>
+                          <S.Title className="title-item">{item.title}</S.Title>
+                          <S.ItemImage src={item.urlImage} alt={item.descriptionImage} />
+                          <S.Description>{item.description}</S.Description>
+                          <S.DeafContainer>
+                            <Button title="Voltar para Pesquisa" className="deaf-button" />
+                            <Button
+                              className="check"
+                              onClick={() => {
+                                selectedPage('search')
+                                setItemId('')
+                              }}
+                            >
+                              <>
+                                <AiOutlineCheck />{' '}
+                              </>
+                            </Button>
+                          </S.DeafContainer>
+                        </div>
+                      ))}
+                  </header>
+                </div>
               </div>
-            </div>
-          </S.Container>
+            </S.Container>
+            <Menu onClickHome={goToHome}/>
+          </>
         )
       }
       return (
-        <S.Container className="title-container">
-          <div className="container">
-            {itemToRender &&
-              itemToRender.map((item) => (
-                <div key={item.id}>
-                  <S.Title className="title-item">{item.title}</S.Title>
-                  <S.ItemImage src={item.urlImage} alt={item.descriptionImage} />
-                  <S.Description>{item.description}</S.Description>
-                  <Button
-                    title="Voltar para Pesquisa"
-                    onClick={() => {
-                      selectedPage('search')
-                      setItemId('')
-                    }}
-                  />
-                </div>
-              ))}
-          </div>
-        </S.Container>
+        <>
+          <S.Container className="title-container">
+            <div className="container">
+              {itemToRender &&
+                itemToRender.map((item) => (
+                  <div key={item.id}>
+                    <S.Title className="title-item">{item.title}</S.Title>
+                    <S.ItemImage src={item.urlImage} alt={item.descriptionImage} />
+                    <S.Description>{item.description}</S.Description>
+                    <Button
+                      title="Voltar para Pesquisa"
+                      onClick={() => {
+                        selectedPage('search')
+                        setItemId('')
+                      }}
+                    />
+                  </div>
+                ))}
+            </div>
+          </S.Container>
+          <Menu onClickHome={goToHome}/>
+        </>
       )
     }
 
     if (pageId === 'searchResults') {
       if (resourceApp === 'deaf') {
         return (
-          <S.Container>
-            <div className="container">
-              <div className="App">
-                <VLibras forceOnload={true} />
-                <header className="App-header">
-                  <S.Title>Resultado(s) da pesquisa</S.Title>
-                  <S.Buttons>
-                    <S.DeafContainer className="display-items">
-                      {itensToRender.map((item) => (
-                        <div key={item.id} className="display-flex">
-                          <Button title={item.title} className="deaf-button item-buttom" />
-                          <Button className="check item-buttom" onClick={() => selectedItem(item.id)}>
+          <>
+            <S.Container>
+              <div className="container">
+                <div className="App">
+                  <VLibras forceOnload={true} />
+                  <header className="App-header">
+                    <S.Title>Resultado(s) da pesquisa</S.Title>
+                    <S.Buttons>
+                      <S.DeafContainer className="display-items">
+                        {itensToRender.map((item) => (
+                          <div key={item.id} className="display-flex">
+                            <Button title={item.title} className="deaf-button item-buttom" />
+                            <Button className="check item-buttom" onClick={() => selectedItem(item.id)}>
+                              <>
+                                <AiOutlineCheck />{' '}
+                              </>
+                            </Button>
+                          </div>
+                        ))}
+                        <div className={startIndex === 0 ? 'is-hidden' : 'display-flex'}>
+                          <Button title="Itens Anteriores" className="deaf-button" />
+                          <Button onClick={handlePrev} className="check">
                             <>
                               <AiOutlineCheck />{' '}
                             </>
                           </Button>
                         </div>
-                      ))}
-                      <div className={startIndex === 0 ? 'is-hidden' : 'display-flex'}>
-                        <Button title="Itens Anteriores" className="deaf-button" />
-                        <Button onClick={handlePrev} className="check">
-                          <>
-                            <AiOutlineCheck />{' '}
-                          </>
-                        </Button>
-                      </div>
-                      <div className={startIndex + 3 >= showItens.length ? 'is-hidden' : 'display-flex'}>
-                        <Button title="Próximos Itens" className="deaf-button" />
-                        <Button onClick={handleNext} className="check">
-                          <>
-                            <AiOutlineCheck />{' '}
-                          </>
-                        </Button>
-                      </div>
-                      <div className="display-flex">
-                        <Button title="Pesquisar novamente" className="deaf-button" />
-                        <Button onClick={() => selectedPage('search')} className="check">
-                          <>
-                            <AiOutlineCheck />{' '}
-                          </>
-                        </Button>
-                      </div>
-                    </S.DeafContainer>
-                  </S.Buttons>
-                </header>
+                        <div className={startIndex + 3 >= showItens.length ? 'is-hidden' : 'display-flex'}>
+                          <Button title="Próximos Itens" className="deaf-button" />
+                          <Button onClick={handleNext} className="check">
+                            <>
+                              <AiOutlineCheck />{' '}
+                            </>
+                          </Button>
+                        </div>
+                        <div className="display-flex">
+                          <Button title="Pesquisar novamente" className="deaf-button" />
+                          <Button onClick={() => selectedPage('search')} className="check">
+                            <>
+                              <AiOutlineCheck />{' '}
+                            </>
+                          </Button>
+                        </div>
+                      </S.DeafContainer>
+                    </S.Buttons>
+                  </header>
+                </div>
               </div>
-            </div>
-          </S.Container>
+            </S.Container>
+            <Menu onClickHome={goToHome}/>
+          </>
         )
       }
       return (
-        <S.Container>
-          <div className="container">
-            <S.Title>Resultado(s) da pesquisa</S.Title>
-            <S.Buttons>
-              {itensToRender.map((item) => (
-                <div key={item.id}>
-                  <Button className="item-buttom" title={item.title} onClick={() => selectedItem(item.id)} />
-                </div>
-              ))}
-              <Button title="Itens Anteriores" onClick={handlePrev} className={startIndex === 0 ? 'is-hidden' : ''} />
-              <Button
-                title="Próximos Itens"
-                onClick={handleNext}
-                className={startIndex + 3 >= showItens.length ? 'is-hidden' : ''}
-              />
-              <Button title="Pesquisar novamente" onClick={() => selectedPage('search')} />
-            </S.Buttons>
-          </div>
-        </S.Container>
+        <>
+          <S.Container>
+            <div className="container">
+              <S.Title>Resultado(s) da pesquisa</S.Title>
+              <S.Buttons>
+                {itensToRender.map((item) => (
+                  <div key={item.id}>
+                    <Button className="item-buttom" title={item.title} onClick={() => selectedItem(item.id)} />
+                  </div>
+                ))}
+                <Button title="Itens Anteriores" onClick={handlePrev} className={startIndex === 0 ? 'is-hidden' : ''} />
+                <Button
+                  title="Próximos Itens"
+                  onClick={handleNext}
+                  className={startIndex + 3 >= showItens.length ? 'is-hidden' : ''}
+                />
+                <Button title="Pesquisar novamente" onClick={() => selectedPage('search')} />
+              </S.Buttons>
+            </div>
+          </S.Container>
+          <Menu onClickHome={goToHome}/>
+        </>
       )
     }
 
     if (pageId === 'search') {
       if (resourceApp === 'deaf') {
         return (
-          <S.Container>
-            <div className="container">
-              <div className="App">
-                <VLibras forceOnload={true} />
-                <header className="App-header">
-                  <S.Title>O que deseja procurar?</S.Title>
-                  <S.Buttons>
-                    <S.InputSearch
-                      onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchText(e.target.value)}
-                    />
-                    <S.DeafContainer>
-                      <Button title="Pesquisar" className="deaf-button" />
-                      <Button className="check" onClick={() => searchItem(searchText)}>
-                        <>
-                          <AiOutlineCheck />{' '}
-                        </>
-                      </Button>
-                    </S.DeafContainer>
-                  </S.Buttons>
-                </header>
+          <>
+            <S.Container>
+              <div className="container">
+                <div className="App">
+                  <VLibras forceOnload={true} />
+                  <header className="App-header">
+                    <S.Title>O que deseja procurar?</S.Title>
+                    <S.Buttons>
+                      <S.InputSearch
+                        onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchText(e.target.value)}
+                      />
+                      <S.DeafContainer>
+                        <Button title="Pesquisar" className="deaf-button" />
+                        <Button className="check" onClick={() => searchItem(searchText)}>
+                          <>
+                            <AiOutlineCheck />{' '}
+                          </>
+                        </Button>
+                      </S.DeafContainer>
+                    </S.Buttons>
+                  </header>
+                </div>
               </div>
-            </div>
-          </S.Container>
+            </S.Container>
+            <Menu onClickHome={goToHome}/>
+          </>
         )
       }
 
       return (
-        <S.Container>
-          <div className="container">
-            <S.Title>O que deseja procurar?</S.Title>
-            <S.Buttons>
-              <S.InputSearch onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchText(e.target.value)} />
-              <Button title="Pesquisar" onClick={() => searchItem(searchText)} />
-            </S.Buttons>
-          </div>
-        </S.Container>
+        <>
+          <S.Container>
+            <div className="container">
+              <S.Title>O que deseja procurar?</S.Title>
+              <S.Buttons>
+                <S.InputSearch onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchText(e.target.value)} />
+                <Button title="Pesquisar" onClick={() => searchItem(searchText)} />
+              </S.Buttons>
+            </div>
+          </S.Container>
+          <Menu onClickHome={goToHome}/>
+        </>
       )
     }
 
@@ -355,50 +382,56 @@ const AppPage = () => {
 
     if (resourceApp === 'deaf') {
       return (
-        <S.Container>
-          {page && (
-            <div className="container">
-              <div className="App">
-                <VLibras forceOnload={true} />
-                <header className="App-header">
-                  <S.Title>{page.title}</S.Title>
-                  <S.Buttons>
-                    {page.buttons.map((button) => (
-                      <div key={button.titleButton}>
-                        <S.DeafContainer>
-                          <Button title={button.titleButton} className="deaf-button" />
-                          <Button onClick={() => selectedPage(button.goToId, button.resource)} className="check">
-                            <>
-                              <AiOutlineCheck />{' '}
-                            </>
-                          </Button>
-                        </S.DeafContainer>
-                      </div>
-                    ))}
-                  </S.Buttons>
-                </header>
+        <>
+          <S.Container>
+            {page && (
+              <div className="container">
+                <div className="App">
+                  <VLibras forceOnload={true} />
+                  <header className="App-header">
+                    <S.Title>{page.title}</S.Title>
+                    <S.Buttons>
+                      {page.buttons.map((button) => (
+                        <div key={button.titleButton}>
+                          <S.DeafContainer>
+                            <Button title={button.titleButton} className="deaf-button" />
+                            <Button onClick={() => selectedPage(button.goToId, button.resource)} className="check">
+                              <>
+                                <AiOutlineCheck />{' '}
+                              </>
+                            </Button>
+                          </S.DeafContainer>
+                        </div>
+                      ))}
+                    </S.Buttons>
+                  </header>
+                </div>
               </div>
-            </div>
-          )}
-        </S.Container>
+            )}
+          </S.Container>
+          <Menu onClickHome={goToHome}/>
+        </>
       )
     }
 
     return (
-      <S.Container>
-        {page && (
-          <div className="container">
-            <S.Title>{page.title}</S.Title>
-            <S.Buttons>
-              {page.buttons.map((button) => (
-                <div key={button.titleButton}>
-                  <Button onClick={() => selectedPage(button.goToId, button.resource)} title={button.titleButton} />
-                </div>
-              ))}
-            </S.Buttons>
-          </div>
-        )}
-      </S.Container>
+      <>
+        <S.Container>
+          {page && (
+            <div className="container">
+              <S.Title>{page.title}</S.Title>
+              <S.Buttons>
+                {page.buttons.map((button) => (
+                  <div key={button.titleButton}>
+                    <Button onClick={() => selectedPage(button.goToId, button.resource)} title={button.titleButton} />
+                  </div>
+                ))}
+              </S.Buttons>
+            </div>
+          )}
+        </S.Container>
+        <Menu onClickHome={goToHome}/>
+      </>
     )
   }
 

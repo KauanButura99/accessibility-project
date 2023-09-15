@@ -5,6 +5,7 @@ export const colors = {
   lightBlue: '#08CBF5',
   inputBlue: '#0da0bf',
   gray: '#D2D0D0',
+  darkGray: '#777777',
   black: '#000',
   white: '#fff'
 }
@@ -25,7 +26,7 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   .container {
-    max-width: 640px;
+    max-width: 480px;
     width: 100%;
     margin: 0 auto;
 
