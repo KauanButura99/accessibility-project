@@ -118,6 +118,7 @@ const itens: ItensProps[] = [
 
 const AppPage = () => {
   const [pageId, setPageId] = useState('1')
+  const [lastPageId, setLastPageId] = useState('')
   const [itemId, setItemId] = useState('')
   const [resourceApp, setResourceApp] = useState<ResourceProps>('none')
   const [searchText, setSearchText] = useState('')
@@ -130,12 +131,41 @@ const AppPage = () => {
   const goToHome = () => {
     setPageId('1')
     setItemId('')
+    setLastPageId('')
     setResourceApp('none')
     setStartIndex(0)
     setSearchText('')
   }
 
+  const goToSearch = () => {
+    setLastPageId(pageId)
+    setPageId('search')
+    setItemId('')
+    setStartIndex(0)
+    setSearchText('')
+  }
+
+  const goBack = () => {
+    if (itemId !== '') {
+      setItemId('')
+    } else if (lastPageId === '') {
+      goToHome()
+    } else if (lastPageId === pageId) {
+      setPageId('1.1')
+      setItemId('')
+      setLastPageId('')
+      setStartIndex(0)
+      setSearchText('')
+    } else {
+      setPageId(lastPageId)
+      setStartIndex(0)
+      setSearchText('')
+      setItemId('')
+    }
+  }
+
   const selectedPage = (idPage: string, resourcePage?: ResourceProps) => {
+    setLastPageId(pageId)
     setPageId(idPage)
 
     if (resourcePage) {
@@ -149,6 +179,7 @@ const AppPage = () => {
 
   const searchItem = (textItem: string) => {
     setSearchText(textItem)
+    setLastPageId(pageId)
     setPageId('searchResults')
   }
 
@@ -218,7 +249,7 @@ const AppPage = () => {
                 </div>
               </div>
             </S.Container>
-            <Menu onClickHome={goToHome}/>
+            <Menu onClickHome={goToHome} onClickBack={goBack} onClickSearch={goToSearch} />
           </>
         )
       }
@@ -243,7 +274,7 @@ const AppPage = () => {
                 ))}
             </div>
           </S.Container>
-          <Menu onClickHome={goToHome}/>
+          <Menu onClickHome={goToHome} onClickBack={goBack} onClickSearch={goToSearch} />
         </>
       )
     }
@@ -300,7 +331,7 @@ const AppPage = () => {
                 </div>
               </div>
             </S.Container>
-            <Menu onClickHome={goToHome}/>
+            <Menu onClickHome={goToHome} onClickBack={goBack} onClickSearch={goToSearch} />
           </>
         )
       }
@@ -325,7 +356,7 @@ const AppPage = () => {
               </S.Buttons>
             </div>
           </S.Container>
-          <Menu onClickHome={goToHome}/>
+          <Menu onClickHome={goToHome} onClickBack={goBack} onClickSearch={goToSearch} />
         </>
       )
     }
@@ -357,7 +388,7 @@ const AppPage = () => {
                 </div>
               </div>
             </S.Container>
-            <Menu onClickHome={goToHome}/>
+            <Menu onClickHome={goToHome} onClickBack={goBack} onClickSearch={goToSearch} />
           </>
         )
       }
@@ -373,7 +404,7 @@ const AppPage = () => {
               </S.Buttons>
             </div>
           </S.Container>
-          <Menu onClickHome={goToHome}/>
+          <Menu onClickHome={goToHome} onClickBack={goBack} onClickSearch={goToSearch} />
         </>
       )
     }
@@ -409,7 +440,7 @@ const AppPage = () => {
               </div>
             )}
           </S.Container>
-          <Menu onClickHome={goToHome}/>
+          <Menu onClickHome={goToHome} onClickBack={goBack} onClickSearch={goToSearch} />
         </>
       )
     }
@@ -430,7 +461,7 @@ const AppPage = () => {
             </div>
           )}
         </S.Container>
-        <Menu onClickHome={goToHome}/>
+        <Menu onClickHome={goToHome} onClickBack={goBack} onClickSearch={goToSearch} />
       </>
     )
   }

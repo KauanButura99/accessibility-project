@@ -12,19 +12,20 @@ export const MenuContainer = styled.div`
   height: 56px;
   border-radius: 2vw;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 5px 30px;
 `
 
 export const MenuButton = styled.button`
   background-color: transparent;
   border: none;
-  font-size: 25px;
+  font-size: 40px;
   cursor: pointer;
+  color: #fff;
+  padding: 0 60px;
 
   &.center {
-    border-right: 1px solid black;
-    border-left: 1px solid black;
-    padding: 0 50px;
+    border-right: 2px solid #fff;
+    border-left: 2px solid #fff;
   }
 `
